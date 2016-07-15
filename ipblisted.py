@@ -37,7 +37,7 @@ class Feed(object):
         settings = {"url": self.url}
         if options.proxy:
             settings["proxies"] = {"http": options.proxy, "https": options.proxy}
-            settings["auth"]  = HTTPProxyAuth(options.proxy_user, urllib.quote(options.proxy_pass))
+            settings["auth"]  = HTTPProxyAuth(options.proxy_user, options.proxy_pass)
         try:
             result = requests.get(**settings)
             if result.status_code == 200:
