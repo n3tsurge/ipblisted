@@ -8,9 +8,9 @@ from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
 from optparse import OptionParser as op
 
-RED = '31'
-BLUE = '34'
-GREEN = '33'
+RED = 31
+BLUE = 34
+GREEN = 33
 
 class Feed(object):
     '''
@@ -33,7 +33,7 @@ class Feed(object):
         :return Found|No Result:
         '''
         if hasattr(self, "disabled") and self.disabled:
-            cprint("[!] Skipping feed \"{}\" as it is disabled in the feed config.".format(self.name), BLUE)
+            return "Skipped - Disabled"
         settings = {"url": self.url}
         if options.proxy:
             settings["proxies"] = {"http": options.proxy, "https": options.proxy}
@@ -108,6 +108,7 @@ def main():
         if ip_found == "Found":
             find_count += 1
             cprint(output,RED)
+            continue
         if options.show_good:
             cprint(output)
 
