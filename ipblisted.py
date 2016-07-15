@@ -8,6 +8,7 @@ from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
 from optparse import OptionParser as op
 
+#COLOR CODES
 RED = 31
 BLUE = 34
 GREEN = 33
@@ -32,12 +33,20 @@ class Feed(object):
         :param options: The OptParse options from the main() function
         :return Found|No Result:
         '''
+
+        # Skip the feed if it is disabled in config
         if hasattr(self, "disabled") and self.disabled:
             return "Skipped - Disabled"
+
+        # Default settings for requests
         settings = {"url": self.url}
+
+        # If the user supplied a proxy, set the proxy information for requests
         if options.proxy:
             settings["proxies"] = {"http": options.proxy, "https": options.proxy}
             settings["auth"]  = HTTPProxyAuth(options.proxy_user, options.proxy_pass)
+
+        # Try to pull down the data from the feed URL
         try:
             result = requests.get(**settings)
             if result.status_code == 200:
@@ -85,30 +94,37 @@ def main():
     parser.add_option('--ip', action="store", dest="ip")
     (options, args) = parser.parse_args()
 
+    # Check if the user supplied an IP address or IP block
     if options.ip is None:
         print("[!] You must supply an IP address")
         sys.exit(1)
 
+    # Check if the user set their credentials when using a proxy
     if options.proxy:
         if options.proxy_user is None or options.proxy_pass is None:
-            print("[!] Warning, no proxy credentials supplied.  Authenticated proxies may not work.")
+            print("[!] Warning, no proxy credentials supplied.  Authenticated proxies may not work.", BLUE)
         else:
             options.proxy_pass = urllib.quote(options.proxy_pass)
 
     # Load in all the feeds from the feed configuration file
     feeds = load_feeds()
 
+    # Set the number of lists we have found to 0
     find_count = 0
 
     print("[*] Searching Blacklist feeds for IP {ip}".format(ip=options.ip))
 
+    # Go through each feed and see if we find the IP or block
     for f in feeds:
+
         ip_found = f.check_ip(options.ip, options=options)
         output = "[*] {}: {}".format(f.name, ip_found)
+
         if ip_found == "Found":
             find_count += 1
             cprint(output,RED)
             continue
+            
         if options.show_good:
             cprint(output)
 
