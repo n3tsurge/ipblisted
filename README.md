@@ -2,7 +2,7 @@
 A python script to check an IP against blacklists
 
 ## Demo 
-[![asciicast](http://asciinema.org/a/9ui8vibgvwofqxb3xbe5gxiyk)](http://asciinema.org/a/9ui8vibgvwofqxb3xbe5gxiyk)
+![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
 
 ## Usage
 ipblisted supports checking a single IP address, a file containing a list of IP addresses, or an entire CIDR block
