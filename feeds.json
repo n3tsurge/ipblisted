@@ -1,0 +1,81 @@
+{ "feeds": 
+    [
+        { 
+            "name": "Emerging Threats",
+            "url": "http://rules.emergingthreats.net/blockrules/compromised-ips.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "TOR Exit Nodes",
+            "url": "http://torstatus.blutmagie.de/ip_list_exit.php/Tor_ip_list_EXIT.csv",
+            "format:": "ip",
+            "disabled": true
+        },
+        { 
+            "name": "AlienVault",
+            "url": "http://reputation.alienvault.com/reputation.data",
+            "format:": "ip",
+            "contains_geodata": true
+        },
+        { 
+            "name": "BlocklistDe",
+            "url": "http://www.blocklist.de/lists/bruteforcelogin.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "Dragon Research Group - SSH",
+            "url": "http://dragonresearchgroup.org/insight/sshpwauth.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "Dragon ResearchGroup - VNC",
+            "url": "http://dragonresearchgroup.org/insight/vncprobe.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "OpenBlock",
+            "url": "http://www.openbl.org/lists/date_all.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "NoThink- Malware",
+            "url": "http://www.nothink.org/blacklist/blacklist_malware_http.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "NoThink - SSH",
+            "url": "http://www.nothink.org/blacklist/blacklist_ssh_all.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "antispam.imp.ch",
+            "url": "http://antispam.imp.ch/spamlist",
+            "format:": "ip"
+        },
+        { 
+            "name": "Dshield",
+            "url": "http://www.dshield.org/ipsascii.html?limit=10000",
+            "format:": "ip"
+        },
+        { 
+            "name": "malc0de",
+            "url": "http://malc0de.com/bl/IP_Blacklist.txt",
+            "format:": "ip"
+        },
+        { 
+            "name": "MalwareBytes",
+            "url": "http://hosts-file.net/rss.asp",
+            "format:": "rss"
+        },
+        { 
+            "name": "SpamHaus Drop",
+            "url": "https://www.spamhaus.org/drop/drop.txt",
+            "format:": "cidr"
+        },
+        { 
+            "name": "SpamHaus eDrop",
+            "url": "https://www.spamhaus.org/drop/edrop.txt",
+            "format:": "cidr"
+        }
+    ]
+}
