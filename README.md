@@ -5,21 +5,11 @@ A python script to check an IP against blacklists
 ![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
 
 ## Usage
-ipblisted supports checking a single IP address, a file containing a list of IP addresses, or an entire CIDR block
+ipblisted supports checking a single IP address and soon a file containing a list of IP addresses, or an entire CIDR block
 
 ### Single IP
 ```
 python ipblisted.py --ip 4.2.2.2
-```
-
-### Searching a CIDR block
-```
-python ipblisted.py --ip 198.199.134.0/24
-```
-
-### Searching from a file list
-```
-python ipblisted.py --infile ips.txt
 ```
 
 ## Sample Output
@@ -52,3 +42,14 @@ There are several optional arguments you can pass to ipblisted
 - --ip - A single IP or CIDR 
 - --infile - A file listing a range of IP addresses you wish to check
 - --good - This flag will show lists that don't contain the IP
+
+## Coming Soon
+### Searching a CIDR block
+```
+python ipblisted.py --ip 198.199.134.0/24
+```
+
+### Searching from a file list
+```
+python ipblisted.py --infile ips.txt
+```
