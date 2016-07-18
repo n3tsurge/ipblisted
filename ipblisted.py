@@ -71,14 +71,28 @@ class Feed(object):
             return "Error"
 
     def check_ip_dns(self, ip, options=None, *args, **kwargs):
+	'''
+	Checks a given IP against a DNSBL (DNS Blacklist)
+        :param self:
+        :param ip:  The IP we are looking for
+        :param options:  The OptParse options from the main() function
+        :return Found|No Result|Timeout|No Answer
+        '''
+
         try:
+	    # Build our resolver
             r = dns.resolver.Resolver()
+
+	    # Create a reverse DNS query for the IP in question
             query = '.'.join(reversed(str(ip).split("."))) + "." + self.url
-            print(query)
             r.timeout = 5
             r.lifetime = 5
+
+            # Check for any A and TXT records matching the reverse record
             answers = r.query(query, "A")
             answers_txt = r.query(query, "TXT")
+
+            # Return a Found response if we have anythin in either list
             if answers or answers_txt:
 		return "Found"
 
@@ -119,6 +133,7 @@ def main():
     parser.add_option('--proxy_user', action="store", dest="proxy_user")
     parser.add_option('--proxy_pass', action="store", dest="proxy_pass")
     parser.add_option('--good', default=False, action="store_true", dest="show_good", help="Displays lists that the IP did NOT show up on.")
+    parser.add_option('--skip-dns', default=False, action="store_true", dest="skip_dns", help="Skips the checking DNS Blacklists")
     parser.add_option('--ip', action="store", dest="ip")
     (options, args) = parser.parse_args()
 
@@ -140,10 +155,17 @@ def main():
     # Set the number of lists we have found to 0
     find_count = 0
 
+    # If the user has the skip-dns flag set, let them know it
+    if options.skip_dns:
+	cprint("[!] Skipping DNS Blacklist checks", BLUE)
+
     print("[*] Searching Blacklist feeds for IP {ip}".format(ip=options.ip))
 
     # Go through each feed and see if we find the IP or block
     for f in feeds:
+
+        if options.skip_dns and f.type == "dns":
+	    continue
 
         ip_found = f.check_ip(options.ip, options=options)
         output = "[*] {}: {}".format(f.name, ip_found)
@@ -152,7 +174,7 @@ def main():
             find_count += 1
             cprint(output,RED)
             continue
-            
+
         if options.show_good:
             cprint(output)
 
@@ -162,4 +184,4 @@ def main():
         cprint("[*] Found on {}/{} lists.".format(find_count,len(feeds)), RED)
 
 if __name__ == '__main__':
-    main()    
+    main()
