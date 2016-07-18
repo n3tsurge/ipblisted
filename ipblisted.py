@@ -1,3 +1,11 @@
+#
+# ipblisted - A python tool to check an IP against black lists
+# Author: Brian Carroll
+# Created: 2016-07-18
+# Modified: 2016-07-18
+# Version: 0.5
+#
+
 import os
 import re
 import sys
@@ -72,8 +80,8 @@ class Feed(object):
             return "Error"
 
     def check_ip_dns(self, ip, options=None, *args, **kwargs):
-	'''
-	Checks a given IP against a DNSBL (DNS Blacklist)
+        '''
+        Checks a given IP against a DNSBL (DNS Blacklist)
         :param self:
         :param ip:  The IP we are looking for
         :param options:  The OptParse options from the main() function
@@ -81,10 +89,10 @@ class Feed(object):
         '''
 
         try:
-	    # Build our resolver
+        # Build our resolver
             r = dns.resolver.Resolver()
 
-	    # Create a reverse DNS query for the IP in question
+        # Create a reverse DNS query for the IP in question
             query = '.'.join(reversed(str(ip).split("."))) + "." + self.url
             r.timeout = 5
             r.lifetime = 5
@@ -95,7 +103,7 @@ class Feed(object):
 
             # Return a Found response if we have anythin in either list
             if answers or answers_txt:
-		return "Found"
+                return "Found"
 
         except dns.resolver.NXDOMAIN:
             return "Not Found"
@@ -136,7 +144,8 @@ def main():
     parser.add_option('--proxy_user', action="store", dest="proxy_user")
     parser.add_option('--proxy_pass', action="store", dest="proxy_pass")
     parser.add_option('--good', default=False, action="store_true", dest="show_good", help="Displays lists that the IP did NOT show up on.")
-    parser.add_option('--skip-dns', default=False, action="store_true", dest="skip_dns", help="Skips the checking DNS Blacklists")
+    parser.add_option('--skip-dnsbl', default=False, action="store_true", dest="skip_dnsbl", help="Skips the checking DNS Blacklists")
+    parser.add_option('--skip-textbl', default=False, action="store_true", dest="skip_textbl", help="Skips the checking DNS Blacklists")
     parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
     parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
     parser.add_option('--cache-timeout', default=300, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
@@ -162,8 +171,8 @@ def main():
     find_count = 0
 
     # If the user has the skip-dns flag set, let them know it
-    if options.skip_dns:
-	cprint("[!] Skipping DNS Blacklist checks", BLUE)
+    if options.skip_dnsbl:
+        cprint("[!] Skipping DNS Blacklist checks", BLUE)
 
     print("[*] Searching Blacklist feeds for IP {ip}".format(ip=options.ip))
 
@@ -177,8 +186,10 @@ def main():
     # Go through each feed and see if we find the IP or block
     for f in feeds:
 
-        if options.skip_dns and f.type == "dns":
-	    continue
+        if options.skip_dnsbl and f.type == "dns":
+            continue
+        if options.skip_textbl and f.type != "dns":
+            continue
 
         ip_found = f.check_ip(options.ip, options=options)
         output = "[*] {}: {}".format(f.name, ip_found)
