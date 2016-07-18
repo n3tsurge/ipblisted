@@ -14,6 +14,7 @@ import urllib
 import requests
 import requests_cache
 import dns.resolver
+from netaddr import IPSet, IPNetwork, IPAddress
 from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
 from optparse import OptionParser as op
@@ -66,7 +67,17 @@ class Feed(object):
         try:
             result = session.get(self.url)
             if result.status_code == 200:
-                matches = re.findall(ip, result.content)
+
+                # If the threat feed is in CIDR notation, pull all the listed subnets
+                # then see if the IP is a member of each one, if we find it stop checking
+                # If NOT CIDR notation, do the normal IP check
+		if self.format == "cidr":
+                    for cidr in [IPNetwork(cidr) for cidr in re.findall("((?:\d{1,3}\.){3}\d{1,3}(?:/\d\d?))", result.content)]:
+                        if IPAddress(ip) in cidr:
+                            return "Found"
+                    return "No Result"
+                else:
+                    matches = re.findall(ip, result.content)
                 if matches:
                     return "Found"
                 else:
@@ -112,7 +123,6 @@ class Feed(object):
             return "No Answer"
         except dns.resolver.NoNameservers:
             return "No Name Servers"
-
 
 
 def load_feeds():
@@ -162,7 +172,12 @@ def main():
 
     # Load up the IP in the --ip flag
     if options.ip:
-        ips += [options.ip]
+	if '\\' in options.ip or '/' in options.ip:
+	    cprint("[!] Detected CIDR notation, adding all IP addresses in this range", BLUE)
+            for ip in IPSet([options.ip]):
+                ips += [str(ip)]
+        else:
+            ips += [options.ip]
 
     # If the user supplied a file load these as well
     if options.infile:
@@ -185,7 +200,6 @@ def main():
     # If the user has the skip-bl flag set, let them know it
     if options.skip_bl:
         cprint("[!] Skipping list based blacklist checks", BLUE)
-
 
     # Establish our cache
     if not options.no_cache:
