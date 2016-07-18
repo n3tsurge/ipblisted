@@ -157,7 +157,7 @@ def main():
     parser.add_option('--skip-bl', default=False, action="store_true", dest="skip_bl", help="Skips the checking of text based blacklists")
     parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
     parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
-    parser.add_option('--cache-timeout', default=300, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
+    parser.add_option('--cache-timeout', default=3600, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
     parser.add_option('--infile', default=None, action="store", dest="infile", help="A newline separated list of IP addresses")
     parser.add_option('--ip', action="store", dest="ip")
     (options, args) = parser.parse_args()
