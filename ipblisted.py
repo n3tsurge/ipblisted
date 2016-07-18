@@ -4,6 +4,7 @@ import sys
 import json
 import urllib
 import requests
+import dns.resolver
 from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
 from optparse import OptionParser as op
@@ -26,6 +27,13 @@ class Feed(object):
         self.__dict__.update(data)
 
     def check_ip(self, ip, options=None, *args, **kwargs):
+        if self.type == "list":
+            return self.check_ip_list(ip, options, *args, **kwargs)
+        elif self.type == "dns":
+            return self.check_ip_dns(ip, options, *args, **kwargs)
+        
+
+    def check_ip_list(self, ip, options=None, *args, **kwargs):
         '''
         Checks a given IP against the blacklist
         :param self:
@@ -61,6 +69,25 @@ class Feed(object):
         except rexp.ConnectionError as e:
             cprint("[!] There was an issue attemping to connect to: {url}".format(url=self.url), RED)
             return "Error"
+
+    def check_ip_dns(self, ip, options=None, *args, **kwargs):
+        try:
+            r = dns.resolver.Resolver()
+            query = '.'.join(reversed(str(ip).split("."))) + "." + self.url
+            r.timeout = 5
+            r.lifetime = 5
+            answers = r.query(query, "A")
+            answers_txt = r.query(query, "TXT")
+            print answers
+            print answers_txt
+
+        except dns.resolver.NXDOMAIN:
+            return "Not Found"
+        except dns.resolver.Timeout:
+            return "Timeout"
+        except dns.resolver.NoAnswer:
+            return "No Answer"
+
 
 
 def load_feeds():
