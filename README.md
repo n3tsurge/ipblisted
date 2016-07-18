@@ -42,6 +42,7 @@ There are several optional arguments you can pass to ipblisted
 - --ip - A single IP or CIDR 
 - --infile - A file listing a range of IP addresses you wish to check
 - --good - This flag will show lists that don't contain the IP
+- --skip-dns - This flag will skip any feed that has a type of DNS
 
 ## Coming Soon
 ### Searching a CIDR block
