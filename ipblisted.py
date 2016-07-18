@@ -51,21 +51,20 @@ class Feed(object):
         :return Found|No Result:
         '''
 
+        session = requests.Session()
+
         # Skip the feed if it is disabled in config
         if hasattr(self, "disabled") and self.disabled:
             return "Skipped - Disabled"
 
-        # Default settings for requests
-        settings = {"url": self.url}
-
         # If the user supplied a proxy, set the proxy information for requests
         if options.proxy:
-            settings["proxies"] = {"http": options.proxy, "https": options.proxy}
-            settings["auth"]  = HTTPProxyAuth(options.proxy_user, options.proxy_pass)
+            session.proxies = {"http": options.proxy, "https": options.proxy}
+            session.auth = HTTPProxyAuth(options.proxy_user, options.proxy_pass)
 
         # Try to pull down the data from the feed URL
         try:
-            result = requests.get(**settings)
+            result = session.get(self.url)
             if result.status_code == 200:
                 matches = re.findall(ip, result.content)
                 if matches:
@@ -145,7 +144,7 @@ def main():
     parser.add_option('--proxy_pass', action="store", dest="proxy_pass")
     parser.add_option('--good', default=False, action="store_true", dest="show_good", help="Displays lists that the IP did NOT show up on.")
     parser.add_option('--skip-dnsbl', default=False, action="store_true", dest="skip_dnsbl", help="Skips the checking DNS Blacklists")
-    parser.add_option('--skip-textbl', default=False, action="store_true", dest="skip_textbl", help="Skips the checking DNS Blacklists")
+    parser.add_option('--skip-bl', default=False, action="store_true", dest="skip_bl", help="Skips the checking of text based blacklists")
     parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
     parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
     parser.add_option('--cache-timeout', default=300, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
@@ -188,7 +187,7 @@ def main():
 
         if options.skip_dnsbl and f.type == "dns":
             continue
-        if options.skip_textbl and f.type != "dns":
+        if options.skip_bl and f.type == "list":
             continue
 
         ip_found = f.check_ip(options.ip, options=options)
