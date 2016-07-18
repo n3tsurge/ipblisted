@@ -1,23 +1,37 @@
 {
   "feeds": [
     {
+      "name": "SpamHaus Drop",
+      "url": "https://www.spamhaus.org/drop/drop.txt",
+      "format": "cidr",
+      "disabled": false,
+      "type": "list"
+    },
+    {
+      "name": "SpamHaus eDrop",
+      "url": "https://www.spamhaus.org/drop/edrop.txt",
+      "format": "cidr",
+      "disabled": false,
+      "type": "list"
+    },
+    {
       "name": "Emerging Threats",
       "url": "http://rules.emergingthreats.net/blockrules/compromised-ips.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "TOR Exit Nodes",
       "url": "http://torstatus.blutmagie.de/ip_list_exit.php/Tor_ip_list_EXIT.csv",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "AlienVault",
       "url": "http://reputation.alienvault.com/reputation.data",
-      "format:": "ip",
+      "format": "ip",
       "contains_geodata": true,
       "disabled": false,
       "type": "list"
@@ -25,84 +39,70 @@
     {
       "name": "BlocklistDe",
       "url": "http://www.blocklist.de/lists/bruteforcelogin.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "Dragon Research Group - SSH",
       "url": "http://dragonresearchgroup.org/insight/sshpwauth.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "Dragon ResearchGroup - VNC",
       "url": "http://dragonresearchgroup.org/insight/vncprobe.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "OpenBlock",
       "url": "http://www.openbl.org/lists/date_all.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "NoThink - Malware",
       "url": "http://www.nothink.org/blacklist/blacklist_malware_http.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "NoThink - SSH",
       "url": "http://www.nothink.org/blacklist/blacklist_ssh_all.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "antispam.imp.ch",
       "url": "http://antispam.imp.ch/spamlist",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "Dshield",
       "url": "http://www.dshield.org/ipsascii.html?limit=10000",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "malc0de",
       "url": "http://malc0de.com/bl/IP_Blacklist.txt",
-      "format:": "ip",
+      "format": "ip",
       "disabled": false,
       "type": "list"
     },
     {
       "name": "MalwareBytes",
       "url": "http://hosts-file.net/rss.asp",
-      "format:": "rss",
-      "disabled": false,
-      "type": "list"
-    },
-    {
-      "name": "SpamHaus Drop",
-      "url": "https://www.spamhaus.org/drop/drop.txt",
-      "format:": "cidr",
-      "disabled": false,
-      "type": "list"
-    },
-    {
-      "name": "SpamHaus eDrop",
-      "url": "https://www.spamhaus.org/drop/edrop.txt",
-      "format:": "cidr",
+      "format": "rss",
       "disabled": false,
       "type": "list"
     },
