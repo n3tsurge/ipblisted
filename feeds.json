@@ -483,6 +483,12 @@
       "url": "zombie.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
+    },
+    {
+      "name": "Protected Sky RBL",
+      "url": "bad.psky.me",
+      "type": "dns",
+      "format": "dns"
     }
   ]
 }
