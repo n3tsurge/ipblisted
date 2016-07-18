@@ -36,16 +36,25 @@ brian@securitas:~/Scripts/ipblisted$ python ipblisted.py --ip 202.191.62.113 --g
 
 ## Optional Arguments
 There are several optional arguments you can pass to ipblisted
-- --proxy - This will let you set a proxy
-- --proxy_user - This is necessary if you are behind an authenticated proxy
-- --proxy_pass - Associated with the user on the authenticated proxy
-- --ip - A single IP or CIDR 
-- --infile - A file listing a range of IP addresses you wish to check
-- --good - This flag will show lists that don't contain the IP
-- --skip-dns - This flag will skip any feed that has a type of DNS
-- --no-cache : Don't use the cached results, and don't store new ones
-- --clear-cache : This clears the existing cache
-- --cache-timeout : This sets when cached responses should expire
+```
+brian@securitas:~/Scripts/ipblisted$ python ipblisted.py -h
+Usage: usage ipblisted.py --ip [ip]
+
+Options:
+  -h, --help            show this help message and exit
+  --proxy=PROXY         Useful for when behind a proxy
+  --proxy_user=PROXY_USER
+  --proxy_pass=PROXY_PASS
+  --good                Displays lists that the IP did NOT show up on.
+  --skip-dnsbl          Skips the checking DNS Blacklists
+  --skip-bl             Skips the checking of text based blacklists
+  --no-cache            This will prevent caching of text based blacklists
+  --clear-cache         This will clear the existing cache
+  --cache-timeout=CACHE_TIMEOUT
+                        Number of seconds before cache results are to expire
+  --infile=INFILE       A newline separated list of IP addresses
+  --ip=IP               
+```
 
 ## Coming Soon
 ### Searching a CIDR block
