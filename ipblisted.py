@@ -31,7 +31,7 @@ class Feed(object):
             return self.check_ip_list(ip, options, *args, **kwargs)
         elif self.type == "dns":
             return self.check_ip_dns(ip, options, *args, **kwargs)
-        
+
 
     def check_ip_list(self, ip, options=None, *args, **kwargs):
         '''
@@ -74,12 +74,13 @@ class Feed(object):
         try:
             r = dns.resolver.Resolver()
             query = '.'.join(reversed(str(ip).split("."))) + "." + self.url
+            print(query)
             r.timeout = 5
             r.lifetime = 5
             answers = r.query(query, "A")
             answers_txt = r.query(query, "TXT")
-            print answers
-            print answers_txt
+            if answers or answers_txt:
+		return "Found"
 
         except dns.resolver.NXDOMAIN:
             return "Not Found"
