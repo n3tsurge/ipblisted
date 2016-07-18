@@ -10,7 +10,7 @@ from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
 from optparse import OptionParser as op
 
-#COLOR CODES
+# Color Codes
 RED = 31
 BLUE = 34
 GREEN = 33
@@ -103,6 +103,8 @@ class Feed(object):
             return "Timeout"
         except dns.resolver.NoAnswer:
             return "No Answer"
+        except dns.resolver.NoNameservers:
+            return "No Name Servers"
 
 
 
