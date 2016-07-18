@@ -4,6 +4,7 @@ import sys
 import json
 import urllib
 import requests
+import requests_cache
 import dns.resolver
 from requests.auth import HTTPProxyAuth
 from requests import exceptions as rexp
@@ -127,13 +128,16 @@ def main():
     '''
     Our main application
     '''
-    
+
     parser = op("usage ipblisted.py --ip [ip]")
     parser.add_option('--proxy', action="store", dest="proxy", help="Useful for when behind a proxy")
     parser.add_option('--proxy_user', action="store", dest="proxy_user")
     parser.add_option('--proxy_pass', action="store", dest="proxy_pass")
     parser.add_option('--good', default=False, action="store_true", dest="show_good", help="Displays lists that the IP did NOT show up on.")
     parser.add_option('--skip-dns', default=False, action="store_true", dest="skip_dns", help="Skips the checking DNS Blacklists")
+    parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
+    parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
+    parser.add_option('--cache-timeout', default=300, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
     parser.add_option('--ip', action="store", dest="ip")
     (options, args) = parser.parse_args()
 
@@ -160,6 +164,13 @@ def main():
 	cprint("[!] Skipping DNS Blacklist checks", BLUE)
 
     print("[*] Searching Blacklist feeds for IP {ip}".format(ip=options.ip))
+
+    # Establish our cache
+    if not options.no_cache:
+        requests_cache.install_cache('ipblisted', expire_after=int(options.cache_timeout))
+        # If the user wants to manually clear the cache, do it now
+        if options.clear_cache:
+            requests_cache.clear()
 
     # Go through each feed and see if we find the IP or block
     for f in feeds:
