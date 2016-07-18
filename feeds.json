@@ -4,6 +4,7 @@
       "name": "Emerging Threats",
       "url": "http://rules.emergingthreats.net/blockrules/compromised-ips.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
@@ -18,198 +19,211 @@
       "url": "http://reputation.alienvault.com/reputation.data",
       "format:": "ip",
       "contains_geodata": true,
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "BlocklistDe",
       "url": "http://www.blocklist.de/lists/bruteforcelogin.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "Dragon Research Group - SSH",
       "url": "http://dragonresearchgroup.org/insight/sshpwauth.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "Dragon ResearchGroup - VNC",
       "url": "http://dragonresearchgroup.org/insight/vncprobe.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "OpenBlock",
       "url": "http://www.openbl.org/lists/date_all.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "NoThink - Malware",
       "url": "http://www.nothink.org/blacklist/blacklist_malware_http.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "NoThink - SSH",
       "url": "http://www.nothink.org/blacklist/blacklist_ssh_all.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "antispam.imp.ch",
       "url": "http://antispam.imp.ch/spamlist",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "Dshield",
       "url": "http://www.dshield.org/ipsascii.html?limit=10000",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "malc0de",
       "url": "http://malc0de.com/bl/IP_Blacklist.txt",
       "format:": "ip",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "MalwareBytes",
       "url": "http://hosts-file.net/rss.asp",
       "format:": "rss",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "SpamHaus Drop",
       "url": "https://www.spamhaus.org/drop/drop.txt",
       "format:": "cidr",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "SpamHaus eDrop",
       "url": "https://www.spamhaus.org/drop/edrop.txt",
       "format:": "cidr",
+      "disabled": true,
       "type": "list"
     },
     {
       "name": "b.barracudacentral.org",
-      "url": "",
+      "url": "b.barracudacentral.org",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "bl.spamcannibal.org",
       "type": "dns",
-      "url": "",
+      "url": "bl.spamcannibal.org",
       "format": "dns"
     },
     {
       "name": "bl.spamcop.net",
       "type": "dns",
-      "url": "",
+      "url": "bl.spamcop.net",
       "format": "dns"
     },
     {
       "name": "blacklist.woody.ch",
       "type": "dns",
-      "url": "",
+      "url": "blacklist.woody.ch",
       "format": "dns"
     },
     {
       "name": "cbl.abuseat.org",
       "type": "dns",
-      "url": "",
+      "url": "cbl.abuseat.org",
       "format": "dns"
     },
     {
       "name": "cdl.anti-spam.org.cn",
-      "url": "",
+      "url": "cdl.anti-spam.org.cn",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "combined.abuse.ch",
       "type": "dns",
-      "url": "",
+      "url": "combined.abuse.ch",
       "format": "dns"
     },
     {
       "name": "combined.rbl.msrbl.net",
-      "url": "",
+      "url": "combined.rbl.msrbl.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "db.wpbl.info",
       "type": "dns",
-      "url": "",
+      "url": "db.wpbl.info",
       "format": "dns"
     },
     {
       "name": "dnsbl-1.uceprotect.net",
-      "url": "",
+      "url": "dnsbl-1.uceprotect.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "dnsbl-2.uceprotect.net",
-      "url": "",
+      "url": "dnsbl-2.uceprotect.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "dnsbl-3.uceprotect.net",
-      "url": "",
+      "url": "dnsbl-3.uceprotect.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "dnsbl.cyberlogic.net",
-      "url": "",
+      "url": "dnsbl.cyberlogic.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "dnsbl.sorbs.net",
       "type": "dns",
-      "url": "",
+      "url": "dnsbl.sorbs.net",
       "format": "dns"
     },
     {
       "name": "drone.abuse.ch",
       "type": "dns",
-      "url": "",
+      "url": "drone.abuse.ch",
       "format": "dns"
     },
     {
       "name": "duinv.aupads.org",
       "type": "dns",
-      "url": "",
+      "url": "duinv.aupads.org",
       "format": "dns"
     },
     {
       "name": "dul.dnsbl.sorbs.net",
       "type": "dns",
-      "url": "",
+      "url": "dul.dnsbl.sorbs.net",
       "format": "dns"
     },
     {
       "name": "dul.ru",
       "type": "dns",
-      "url": "",
+      "url": "dul.ru",
       "format": "dns"
     },
     {
       "name": "dyna.spamrats.com",
       "type": "dns",
-      "url": "",
+      "url": "dyna.spamrats.com",
       "format": "dns"
     },
     {
       "name": "dynip.rothen.com",
       "type": "dns",
-      "url": "",
+      "url": "dynip.rothen.com",
       "format": "dns"
     },
     {
@@ -220,253 +234,253 @@
     },
     {
       "name": "images.rbl.msrbl.net",
-      "url": "",
+      "url": "http.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "ips.backscatterer.org",
-      "url": "",
+      "url": "ips.backscatterer.org",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "ix.dnsbl.manitu.net",
       "type": "dns",
-      "url": "",
+      "url": "ix.dnsbl.manitu.net",
       "format": "dns"
     },
     {
       "name": "korea.services.net",
       "type": "dns",
-      "url": "",
+      "url": "korea.services.net",
       "format": "dns"
     },
     {
       "name": "misc.dnsbl.sorbs.net",
-      "url": "",
+      "url": "misc.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "noptr.spamrats.com",
       "type": "dns",
-      "url": "",
+      "url": "noptr.spamrats.com",
       "format": "dns"
     },
     {
       "name": "ohps.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "ohps.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "omrs.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "omrs.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "orvedb.aupads.org",
       "type": "dns",
-      "url": "",
+      "url": "orvedb.aupads.org",
       "format": "dns"
     },
     {
       "name": "osps.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "osps.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "osrs.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "osrs.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "owfs.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "owfs.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "pbl.spamhaus.org",
       "type": "dns",
-      "url": "",
+      "url": "pbl.spamhaus.org",
       "format": "dns"
     },
     {
       "name": "phishing.rbl.msrbl.net",
-      "url": "",
+      "url": "phishing.rbl.msrbl.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "probes.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "probes.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "proxy.bl.gweep.ca",
       "type": "dns",
-      "url": "",
+      "url": "proxy.bl.gweep.ca",
       "format": "dns"
     },
     {
       "name": "rbl.interserver.net",
       "type": "dns",
-      "url": "",
+      "url": "rbl.interserver.net",
       "format": "dns"
     },
     {
       "name": "rdts.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "rdts.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "relays.bl.gweep.ca",
       "type": "dns",
-      "url": "",
+      "url": "relays.bl.gweep.ca",
       "format": "dns"
     },
     {
       "name": "relays.nether.net",
       "type": "dns",
-      "url": "",
+      "url": "relays.nether.net",
       "format": "dns"
     },
     {
       "name": "residential.block.transip.nl",
-      "url": "",
+      "url": "residential.block.transip.nl",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "ricn.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "ricn.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "rmst.dnsbl.net.au",
       "type": "dns",
-      "url": "",
+      "url": "rmst.dnsbl.net.au",
       "format": "dns"
     },
     {
       "name": "smtp.dnsbl.sorbs.net",
-      "url": "",
+      "url": "smtp.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "socks.dnsbl.sorbs.net",
-      "url": "",
+      "url": "socks.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "spam.abuse.ch",
       "type": "dns",
-      "url": "",
+      "url": "spam.abuse.ch",
       "format": "dns"
     },
     {
       "name": "spam.dnsbl.sorbs.net",
-      "url": "",
+      "url": "spam.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "spam.rbl.msrbl.net",
       "type": "dns",
-      "url": "",
+      "url": "spam.rbl.msrbl.net",
       "format": "dns"
     },
     {
       "name": "spam.spamrats.com",
       "type": "dns",
-      "url": "",
+      "url": "spam.spamrats.com",
       "format": "dns"
     },
     {
       "name": "spamrbl.imp.ch",
       "type": "dns",
-      "url": "",
+      "url": "spamrbl.imp.ch",
       "format": "dns"
     },
     {
       "name": "t3direct.dnsbl.net.au",
-      "url": "",
+      "url": "t3direct.dnsbl.net.au",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "tor.dnsbl.sectoor.de",
-      "url": "",
+      "url": "tor.dnsbl.sectoor.de",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "torserver.tor.dnsbl.sectoor.de",
-      "url": "",
+      "url": "torserver.tor.dnsbl.sectoor.de",
       "type": "dns",
       "format": "dns"
     },
     {
       "name": "ubl.lashback.com",
       "type": "dns",
-      "url": "",
+      "url": "ubl.lashback.com",
       "format": "dns"
     },
     {
       "name": "ubl.unsubscore.com",
       "type": "dns",
-      "url": "",
+      "url": "ubl.unsubscore.com",
       "format": "dns"
     },
     {
       "name": "virus.rbl.jp",
       "type": "dns",
-      "url": "",
+      "url": "virus.rbl.jp",
       "format": "dns"
     },
     {
       "name": "virus.rbl.msrbl.net",
       "type": "dns",
-      "url": "",
+      "url": "virus.rbl.msrbl.net",
       "format": "dns"
     },
     {
       "name": "web.dnsbl.sorbs.net",
       "type": "dns",
-      "url": "",
+      "url": "web.dnsbl.sorbs.net",
       "format": "dns"
     },
     {
       "name": "wormrbl.imp.ch",
       "type": "dns",
-      "url": "",
+      "url": "wormrbl.imp.ch",
       "format": "dns"
     },
     {
       "name": "xbl.spamhaus.org",
       "type": "dns",
-      "url": "",
+      "url": "xbl.spamhaus.org",
       "format": "dns"
     },
     {
       "name": "zen.spamhaus.org",
       "type": "dns",
-      "url": "",
+      "url": "zen.spamhaus.org",
       "format": "dns"
     },
     {
       "name": "zombie.dnsbl.sorbs.net",
-      "url": "",
+      "url": "zombie.dnsbl.sorbs.net",
       "type": "dns",
       "format": "dns"
     }
