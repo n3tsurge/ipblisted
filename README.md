@@ -4,6 +4,12 @@ A python script to check an IP against blacklists.  Inspired by [isthisipbad](ht
 ## Demo 
 ![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
 
+## Requirements
+ipblisted has a few requirements.  I am working to reduce these requirements as much as possible.
+- requests
+- requests_cache
+- netaddr
+
 ## Usage
 ipblisted supports checking a single IP address and soon a file containing a list of IP addresses, or an entire CIDR block
 
