@@ -18,6 +18,16 @@ ipblisted supports checking a single IP address and soon a file containing a lis
 python ipblisted.py --ip 4.2.2.2
 ```
 
+### Searching a CIDR block
+```
+python ipblisted.py --ip 198.199.134.0/24
+```
+
+### Searching from a file list
+```
+python ipblisted.py --infile ips.txt
+```
+
 ## Sample Output
 ```
 brian@securitas:~/Scripts/ipblisted$ python ipblisted.py --ip 202.191.62.113 --good
@@ -60,15 +70,4 @@ Options:
                         Number of seconds before cache results are to expire
   --infile=INFILE       A newline separated list of IP addresses
   --ip=IP               
-```
-
-## Coming Soon
-### Searching a CIDR block
-```
-python ipblisted.py --ip 198.199.134.0/24
-```
-
-### Searching from a file list
-```
-python ipblisted.py --infile ips.txt
 ```
