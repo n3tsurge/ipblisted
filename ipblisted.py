@@ -148,13 +148,25 @@ def main():
     parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
     parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
     parser.add_option('--cache-timeout', default=300, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
+    parser.add_option('--infile', default=None, action="store", dest="infile", help="A newline separated list of IP addresses")
     parser.add_option('--ip', action="store", dest="ip")
     (options, args) = parser.parse_args()
 
     # Check if the user supplied an IP address or IP block
-    if options.ip is None:
-        print("[!] You must supply an IP address")
+    if options.ip is None and options.infile is None:
+        print("[!] You must supply an IP address or a file containing IP addresses.")
         sys.exit(1)
+
+    # Set our list of IPs to an empty list
+    ips = []
+
+    # Load up the IP in the --ip flag
+    if options.ip:
+        ips += [options.ip]
+
+    # If the user supplied a file load these as well
+    if options.infile:
+        ips += [ip for ip in file(options.infile).read().split('\n') if ip != '']
 
     # Check if the user set their credentials when using a proxy
     if options.proxy:
@@ -166,45 +178,62 @@ def main():
     # Load in all the feeds from the feed configuration file
     feeds = load_feeds()
 
-    # Set the number of lists we have found to 0
-    find_count = 0
-
-    # If the user has the skip-dns flag set, let them know it
+    # If the user has the skip-dnsbl flag set, let them know it
     if options.skip_dnsbl:
-        cprint("[!] Skipping DNS Blacklist checks", BLUE)
+        cprint("[!] Skipping DNS based blacklist checks", BLUE)
 
-    print("[*] Searching Blacklist feeds for IP {ip}".format(ip=options.ip))
+    # If the user has the skip-bl flag set, let them know it
+    if options.skip_bl:
+        cprint("[!] Skipping list based blacklist checks", BLUE)
+
 
     # Establish our cache
     if not options.no_cache:
         requests_cache.install_cache('ipblisted', expire_after=int(options.cache_timeout))
+
         # If the user wants to manually clear the cache, do it now
         if options.clear_cache:
             requests_cache.clear()
 
-    # Go through each feed and see if we find the IP or block
-    for f in feeds:
+    # If the user is skipping certain feed types, exclude them
+    if options.skip_dnsbl:
+        feeds = [f for f in feeds if f.type != "dns"]
+    if options.skip_bl:
+        feeds = [f for f in feeds if f.type != "list"]
 
-        if options.skip_dnsbl and f.type == "dns":
-            continue
-        if options.skip_bl and f.type == "list":
-            continue
+    # If there are no lists set, just exit the program
+    if len(feeds) == 0:
+        cprint("[!] No feeds were defined, please define them in feeds.json or don't skip them all.", RED)
+        sys.exit(1)
 
-        ip_found = f.check_ip(options.ip, options=options)
-        output = "[*] {}: {}".format(f.name, ip_found)
+    # Loop through each IP and find it
+    print("[*] Checking {} IP addresses against {} lists".format(len(ips), len(feeds)))
+    for ip in ips:
 
-        if ip_found == "Found":
-            find_count += 1
-            cprint(output,RED)
-            continue
+        print("[*] Searching Blacklist feeds for IP {ip}".format(ip=ip))
 
-        if options.show_good:
-            cprint(output)
+        # Set the number of lists we have found to 0
+        find_count = 0
 
-    if find_count == 0:
-        cprint("[*] Not found on any defined lists.", GREEN)
-    else:
-        cprint("[*] Found on {}/{} lists.".format(find_count,len(feeds)), RED)
+        # Go through each feed and see if we find the IP or block
+        for f in feeds:
+
+            ip_found = f.check_ip(ip, options=options)
+            output = "[*] {}: {}".format(f.name, ip_found)
+
+            if ip_found == "Found":
+                find_count += 1
+                cprint(output,RED)
+                continue
+
+            if options.show_good:
+                cprint(output)
+
+        if find_count == 0:
+            cprint("[*] Not found on any defined lists.", GREEN)
+        else:
+            cprint("[*] Found on {}/{} lists.".format(find_count,len(feeds)), RED)
+        print("[-]")
 
 if __name__ == '__main__':
     main()
