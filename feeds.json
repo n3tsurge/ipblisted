@@ -51,7 +51,7 @@
       "type": "list"
     },
     {
-      "name": "Dragon ResearchGroup - VNC",
+      "name": "Dragon Research Group - VNC",
       "url": "http://dragonresearchgroup.org/insight/vncprobe.txt",
       "format": "ip",
       "disabled": false,
