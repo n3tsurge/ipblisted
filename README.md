@@ -1,5 +1,5 @@
 # ipblisted
-A python script to check an IP against blacklists
+A python script to check an IP against blacklists.  Inspired by [isthisipbad](https://github.com/jgamblin/isthisipbad) and adapted to be a little more complete.
 
 ## Demo 
 ![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
