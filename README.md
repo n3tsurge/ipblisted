@@ -5,10 +5,10 @@ A python script to check an IP against blacklists.  Inspired by [isthisipbad](ht
 ![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
 
 ## Changelog
-```
-** 2016-07-19 **
+
+**2016-07-19**
 - Added threading to the application.  By default there are 5 threads, the user can set the number of threads using the --thread flag
-```
+
 
 ## Open Tasks
 - Add an option to throttle the checks 
