@@ -4,6 +4,13 @@ A python script to check an IP against blacklists.  Inspired by [isthisipbad](ht
 ## Demo 
 ![Demo Image](https://github.com/krypticnetworks/ipblisted/blob/master/demo.gif)
 
+## Changelog
+
+## Open Tasks
+- Add an option to throttle the checks 
+- Add an option to cache DNS A and TXT results to match their TTL
+- Thread the application by default, give the user an option to increase or decrease the number of threads
+
 ## Requirements
 ipblisted has a few requirements.  I am working to reduce these requirements as much as possible.
 - requests
