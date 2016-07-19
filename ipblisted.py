@@ -3,7 +3,7 @@
 # Author: Brian Carroll
 # Created: 2016-07-18
 # Modified: 2016-07-18
-# Version: 0.5
+# Version: 0.8
 #
 
 import os
@@ -196,7 +196,7 @@ def main():
     parser.add_option('--skip-bl', default=False, action="store_true", dest="skip_bl", help="Skips the checking of text based blacklists")
     parser.add_option('--no-cache', default=False, action="store_true", dest="no_cache", help="This will prevent caching of text based blacklists")
     parser.add_option('--clear-cache', default=False, action="store_true", dest="clear_cache", help="This will clear the existing cache")
-    parser.add_option('--cache-timeout', default=3600, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire")
+    parser.add_option('--cache-timeout', default=60*60*12, action="store", dest="cache_timeout", help="Number of seconds before cache results are to expire (Default: 12 hours)")
     parser.add_option('--threads', default=5, action="store", dest="threads", help="Sets the number of feed search threads")
     parser.add_option('--infile', default=None, action="store", dest="infile", help="A newline separated list of IP addresses")
     parser.add_option('--ip', action="store", dest="ip")
@@ -230,13 +230,13 @@ def main():
         else:
             options.proxy_pass = urllib.quote(options.proxy_pass)
 
-    # Initialize our Queue of feeds
+    # Initialize a queue for the feeds to go in
     fq = Queue()
 
     # Load in all the feeds from the feed configuration file
     feeds = load_feeds({"skip_bl": options.skip_bl, "skip_dnsbl": options.skip_dnsbl})
 
-    # Establish our cache
+    # Establish the requests cache
     if not options.no_cache:
         requests_cache.install_cache('ipblisted', expire_after=int(options.cache_timeout))
 
@@ -244,7 +244,7 @@ def main():
         if options.clear_cache:
             requests_cache.clear()
 
-    # If there are no lists set, just exit the program
+    # If there are no feeds set, just exit the program
     if len(feeds) == 0:
         cprint("[!] No feeds were defined, please define them in feeds.json or don't skip them all.", RED)
         sys.exit(1)
@@ -257,7 +257,7 @@ def main():
 
         print("[*] Searching Blacklist feeds for IP {ip}".format(ip=ip))
 
-        # Build our output queue
+        # Build the feed requests queue
         oq = Queue()
 
         # Create a queue of all the feeds we want to check
@@ -265,7 +265,7 @@ def main():
 	qsize = fq.qsize()
 
         # Start up our threads and start checking the feeds
-	threads = [FeedThread(ip, options, fq, oq) for i in range(0,options.threads-1)]
+	threads = [FeedThread(ip, options, fq, oq) for i in range(0,options.threads)]
         [t.start() for t in threads]
         [t.join() for t in threads]
 
@@ -275,6 +275,7 @@ def main():
         # Go through each feed and see if we find the IP or block
         results = [r for r in oq.queue]
 
+        # Print out if the IP was found in any of the feeds
         for result in results:
 
             output = "[*] {name}: {found}".format(**result)
