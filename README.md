@@ -11,7 +11,7 @@ ipblisted has a few requirements.  I am working to reduce these requirements as 
 - netaddr
 
 ## Usage
-ipblisted supports checking a single IP address and soon a file containing a list of IP addresses, or an entire CIDR block
+ipblisted supports checking a single IP address, a file containing a list of IP addresses, or an entire CIDR block, or a combination of each
 
 ### Single IP
 ```
