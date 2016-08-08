@@ -226,7 +226,7 @@ def main():
     # Check if the user set their credentials when using a proxy
     if options.proxy:
         if options.proxy_user is None or options.proxy_pass is None:
-            print("[!] Warning, no proxy credentials supplied.  Authenticated proxies may not work.", BLUE)
+            cprint("[!] Warning, no proxy credentials supplied.  Authenticated proxies may not work.", BLUE)
         else:
             options.proxy_pass = urllib.quote(options.proxy_pass)
 
