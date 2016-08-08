@@ -30,7 +30,7 @@ python ipblisted.py --ip 4.2.2.2
 
 ### Searching a CIDR block
 ```
-python ipblisted.py --ip 198.199.134.0/24
+python ipblisted.py --ip 192.168.1.0/24
 ```
 
 ### Searching from a file list
