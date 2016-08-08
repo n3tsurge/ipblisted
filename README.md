@@ -81,3 +81,6 @@ Options:
   --infile=INFILE       A newline separated list of IP addresses
   --ip=IP               
 ```
+
+## Disclaimer
+This software is provided as is with no support, I am not responsible if you break your system with it or use it in ways outside its original intention.
