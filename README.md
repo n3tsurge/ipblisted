@@ -9,7 +9,6 @@ A python script to check an IP against blacklists.  Inspired by [isthisipbad](ht
 **2016-07-19**
 - Added threading to the application.  By default there are 5 threads, the user can set the number of threads using the --thread flag
 
-
 ## Open Tasks
 - Add an option to throttle the checks 
 - Add an option to cache DNS A and TXT results to match their TTL
@@ -26,6 +25,12 @@ ipblisted supports checking a single IP address, a file containing a list of IP 
 ### Single IP
 ```
 python ipblisted.py --ip 4.2.2.2
+```
+
+### Multiple IP Addresses
+The IP flag accepts a comma separated list of IP addresses
+```
+python ipblisted.py --ip 4.2.2.2,4.2.2.3,4.2.2.2
 ```
 
 ### Searching a CIDR block
@@ -79,6 +84,8 @@ Options:
   --cache-timeout=CACHE_TIMEOUT
                         Number of seconds before cache results are to expire
   --infile=INFILE       A newline separated list of IP addresses
+  --outfile=OUTFILE     The file to write the results to
+  --format=FORMAT       The format the outfile should in.  Default CSV
   --ip=IP               
 ```
 
