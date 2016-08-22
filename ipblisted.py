@@ -212,10 +212,12 @@ def main():
 
     # Load up the IP in the --ip flag
     if options.ip:
-	if '\\' in options.ip or '/' in options.ip:
-	    cprint("[!] Detected CIDR notation, adding all IP addresses in this range", BLUE)
+        if '\\' in options.ip or '/' in options.ip:
+            cprint("[!] Detected CIDR notation, adding all IP addresses in this range", BLUE)
             for ip in IPSet([options.ip]):
                 ips += [str(ip)]
+        elif len(options.ip.split(',')) > 0:
+            ips += [ip for ip in options.ip.split(',') if ip != '']  # Handles when user does ,%20 
         else:
             ips += [options.ip]
 
