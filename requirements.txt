@@ -1,0 +1,4 @@
+dnspython==1.14.0
+netaddr==0.7.18
+requests==2.11.1
+requests-cache==0.4.12
