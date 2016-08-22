@@ -6,13 +6,13 @@ A python script to check an IP against blacklists.  Inspired by [isthisipbad](ht
 
 ## Changelog
 
-**2016-07-19**
-- Added threading to the application.  By default there are 5 threads, the user can set the number of threads using the --thread flag
-
 **2016-09-21**
 - Fixed comma separated lists in the --ip flag
 - Added CSV export
 - Added WAN mode
+
+**2016-07-19**
+- Added threading to the application.  By default there are 5 threads, the user can set the number of threads using the --thread flag
 
 ## Open Tasks
 - Add an option to throttle the checks 
