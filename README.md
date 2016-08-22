@@ -86,7 +86,8 @@ Options:
   --infile=INFILE       A newline separated list of IP addresses
   --outfile=OUTFILE     The file to write the results to
   --format=FORMAT       The format the outfile should in.  Default CSV
-  --ip=IP               
+  --ip=IP               A single IP or list of IP addresses to check against blacklists
+  --wan                 WAN mode will obtain the current WAN IP and add it to the check list
 ```
 
 ## Disclaimer
