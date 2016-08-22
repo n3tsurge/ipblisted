@@ -8,12 +8,15 @@
 
 import os
 import re
+import csv
 import sys
 import time
 import json
 import urllib
 import requests
+import datetime
 import threading
+import collections
 import dns.resolver
 import requests_cache
 from Queue import Queue
@@ -182,6 +185,71 @@ def cprint(text, color_code=39):
         print('\x1b[%dm%s\x1b[0m') % (color_code, text)
 
 
+def convert_results(results, ip, outfile, outformat="csv"):
+    '''
+    Converts the results to an outfile that the user declared
+    :param results: The array of dictionary results
+    :param outfile: The name of the file the user wishes to write to
+    :param outformat: The format the user wants to write in
+    '''
+
+    # Get a current timestamp because it will be used in output rows to dictate when the check
+    # was run against the result
+    current_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if outformat == "csv":
+
+        # Pivot the result
+        new_result = {result.get('name'): result.get('found') for result in results}
+
+        # Add a field for the IP address
+        new_result["ip"] = ip
+
+        # Add a field for the date the IP was last scanned
+        new_result["scan_date"] = current_date
+
+        # Add a field for the number of lists the IP shows up on
+        new_result["lists_on"] = len([result for result in results if result.get('found') == "Found"])
+        
+        field_names = [field for field in new_result]
+
+        # Move IP and Scan Date to the front of the header
+        field_names.insert(0, field_names.pop(field_names.index('ip')))
+        field_names.insert(1, field_names.pop(field_names.index('scan_date')))
+        field_names.insert(2, field_names.pop(field_names.index('lists_on')))
+
+        # Check if the file already exists, if not created it
+        # If it does, open it in append mode
+        if not file_exists(outfile):
+            fh = open(outfile, 'wb')
+        else:
+            fh = open(outfile, 'a')
+
+        # Declare the dictionary writer
+        writer = csv.DictWriter(fh, delimiter=',', fieldnames=field_names)
+
+        # If the file was opened in write binary mode, add the CSV header
+        if fh.mode == 'wb':
+            writer.writeheader()
+        
+        writer.writerow(new_result)
+
+        fh.close()
+
+
+def file_exists(filename):
+    '''
+    Checks to see if a file already exists
+    '''
+
+    try:
+        file = open(filename)
+        return True
+    except Exception as e:
+        return False
+    return False
+
+
 def main():
     '''
     Our main application
@@ -200,7 +268,18 @@ def main():
     parser.add_option('--threads', default=5, action="store", dest="threads", help="Sets the number of feed search threads")
     parser.add_option('--infile', default=None, action="store", dest="infile", help="A newline separated list of IP addresses")
     parser.add_option('--ip', action="store", dest="ip")
+    parser.add_option('-f', '--format', action="store", dest="format", help="Set the output format for an outfile", default="csv")
+    parser.add_option('-o', '--outfile', action="store", dest="outfile", help="Where to write the results", default=None)
     (options, args) = parser.parse_args()
+
+    if options.format:
+        allowed_formats = ['csv', 'xls', 'xlsx', 'txt']
+        if not options.format in allowed_formats:
+            cprint("[!] Invalid format \"{}\".  Please select a valid format {}".format(options.format, ', '.join(allowed_formats)), RED)
+            sys.exit(1)
+
+    if options.outfile:
+        print("[*] Results will be saved to {} in {} format".format(options.outfile, options.format))
 
     # Check if the user supplied an IP address or IP block
     if options.ip is None and options.infile is None:
@@ -276,6 +355,9 @@ def main():
 
         # Go through each feed and see if we find the IP or block
         results = [r for r in oq.queue]
+
+        if options.outfile:
+            convert_results(results, ip, options.outfile)
 
         # Print out if the IP was found in any of the feeds
         for result in results:
