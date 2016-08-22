@@ -175,6 +175,19 @@ def load_feeds(skip=None):
     return feeds
 
 
+def wan_ip():
+    '''
+    Gets the users WAN ip using ipify.org, so they can check their local IP
+    against a list if they wish to
+    '''
+    response = requests.get('http://api.ipify.org/?format=json')
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        return data['ip']
+    else:
+        return None
+
+
 def cprint(text, color_code=39):
     '''
     Prints things in pretty colors, because colors are cool
@@ -268,6 +281,7 @@ def main():
     parser.add_option('--threads', default=5, action="store", dest="threads", help="Sets the number of feed search threads")
     parser.add_option('--infile', default=None, action="store", dest="infile", help="A newline separated list of IP addresses")
     parser.add_option('--ip', action="store", dest="ip")
+    parser.add_option('-w','--wan', action="store_true", dest="wan", default=False, help="Will add your WAN ip to the list of IP addresses being checked.")
     parser.add_option('-f', '--format', action="store", dest="format", help="Set the output format for an outfile", default="csv")
     parser.add_option('-o', '--outfile', action="store", dest="outfile", help="Where to write the results", default=None)
     (options, args) = parser.parse_args()
@@ -282,8 +296,8 @@ def main():
         print("[*] Results will be saved to {} in {} format".format(options.outfile, options.format))
 
     # Check if the user supplied an IP address or IP block
-    if options.ip is None and options.infile is None:
-        print("[!] You must supply an IP address or a file containing IP addresses.")
+    if options.ip is None and options.infile is None and options.wan is False:
+        print("[!] You must supply an IP address, the WAN flag or a file containing IP addresses.")
         sys.exit(1)
 
     # Set our list of IPs to an empty list
@@ -303,6 +317,13 @@ def main():
     # If the user supplied a file load these as well
     if options.infile:
         ips += [ip for ip in file(options.infile).read().split('\n') if ip != '']
+
+    if options.wan:
+        ip = wan_ip()
+        if ip:
+            ips += [ip]
+        else:
+            cprint("[!] There was an issue trying to gather the WAN IP address.", RED)
 
     # Check if the user set their credentials when using a proxy
     if options.proxy:
@@ -329,6 +350,10 @@ def main():
     if len(feeds) == 0:
         cprint("[!] No feeds were defined, please define them in feeds.json or don't skip them all.", RED)
         sys.exit(1)
+
+    # Final check to make sure we actually have a list of IP addresses to check
+    if len(ips) == 0:
+        cprint("[!] No IP addresses were listed to check.  Please check your syntax and try again.", RED)
 
     feed_results = []
 
